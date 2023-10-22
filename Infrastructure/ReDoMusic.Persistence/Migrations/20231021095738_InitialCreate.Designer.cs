@@ -12,8 +12,8 @@ using ReDoMusic.Persistence.Context;
 namespace ReDoMusic.Persistence.Migrations
 {
     [DbContext(typeof(ReDoMusicDbContext))]
-    [Migration("20231019165350_mig_1_create_database")]
-    partial class mig_1_create_database
+    [Migration("20231021095738_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -63,9 +63,8 @@ namespace ReDoMusic.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Brand")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("BrandId")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Color")
                         .HasColumnType("integer");
@@ -95,7 +94,20 @@ namespace ReDoMusic.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BrandId");
+
                     b.ToTable("Instruments");
+                });
+
+            modelBuilder.Entity("ReDoMusic.Domain.Entites.Instrument", b =>
+                {
+                    b.HasOne("ReDoMusic.Domain.Entites.Brand", "Brand")
+                        .WithMany()
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Brand");
                 });
 #pragma warning restore 612, 618
         }
