@@ -12,8 +12,8 @@ using ReDoMusic.Persistence.Context;
 namespace ReDoMusic.Persistence.Migrations
 {
     [DbContext(typeof(ReDoMusicDbContext))]
-    [Migration("20231021095738_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20231028222543_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
