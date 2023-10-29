@@ -23,6 +23,7 @@ namespace ReDoMusic.MVC.Controllers
             var comments = _context.Comments.ToList();
             return View(comments);
         }
+
         [HttpGet]
         public IActionResult AddComment()
         {
