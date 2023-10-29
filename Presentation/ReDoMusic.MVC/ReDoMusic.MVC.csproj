@@ -14,7 +14,6 @@
     <None Remove="Views\Home\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="Views\Brand\" />
     <Folder Include="Views\Home\" />
   </ItemGroup>

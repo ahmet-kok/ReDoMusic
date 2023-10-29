@@ -13,7 +13,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\" />
-    <Folder Include="Entites\" />
     <Folder Include="Enums\" />
   </ItemGroup>
 </Project>
