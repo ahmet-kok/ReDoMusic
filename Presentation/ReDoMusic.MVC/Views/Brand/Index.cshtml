@@ -51,7 +51,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div id="modal-body-edit" class="modal-body">
-                                        <form id="editUserForm">
+                                        <form id="editUserForm" method="post">
                                             <div class="form-group">
                                                 <input type="text" class="form-control" id="user_id" name="user_id" hidden />
                                             </div>
@@ -71,7 +71,7 @@
 
                                             <br>
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
+                                            <button asp-action="UpdateBrand" type="submit" class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
                                         </form>
                                     </div>
                                     <!-- <div class="modal-footer">
