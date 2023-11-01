@@ -17,28 +17,49 @@ namespace ReDoMusic.MVC.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var shoppingCart = _context.ShoppingCarts.FirstOrDefault();
+            //var shoppingCart = _context.ShoppingCarts.OrderBy(x => x.Id).Last();
+            //var shoppingCart = _context.ShoppingCarts.Where(x=> x.)
+            var cart = _context.ShoppingCarts.Where(x => x.Id == Guid.Parse("123e4567-e89b-12d3-a456-426614174000")).FirstOrDefault();
 
-            //Instrument instrument = new Instrument
-            //{
-            //    Id = Guid.NewGuid(), // Assign a unique identifier
-            //    Name = "Example Instrument",
-            //    Brand = new Brand
-            //    {
-            //        Id = Guid.NewGuid(), // Assign a unique identifier for the Brand
-            //        Name = "Example Brand",
-            //        DisplayText = "Example Display Text",
-            //        Address = "123 Example Street"
-            //    },
-            //    Model = "Example Model",
-            //    Color = Domain.Enums.Color.Red, // Assuming Color is an enum
-            //    ProductionYear = new DateTime(2023, 1, 1),
-            //    Price = 999.99m
-            //};
+            //var instruments = _context.Instruments.Where(x => x.Shopping == "123e4567-e89b-12d3-a456-426614174000").FirstOrDefault();
+            Instrument instrument = new Instrument
+            {
+                Id = Guid.NewGuid(), // Assign a unique identifier
+                Name = "Example Instrument",
+                Brand = new Brand
+                {
+                    Id = Guid.NewGuid(), // Assign a unique identifier for the Brand
+                    Name = "Example Brand",
+                    DisplayText = "Example Display Text",
+                    Address = "123 Example Street"
+                },
+                Model = "Example Model",
+                Color = Domain.Enums.Color.Red, // Assuming Color is an enum
+                ProductionYear = new DateTime(2023, 1, 1),
+                Price = 999.99m
+            };
 
+            Instrument instrument2 = new Instrument
+            {
+                Id = Guid.NewGuid(), // Assign a unique identifier
+                Name = "Example Instrument",
+                Brand = new Brand
+                {
+                    Id = Guid.NewGuid(), // Assign a unique identifier for the Brand
+                    Name = "Example Brand",
+                    DisplayText = "Example Display Text",
+                    Address = "123 Example Street"
+                },
+                Model = "Example Model",
+                Color = Domain.Enums.Color.Red, // Assuming Color is an enum
+                ProductionYear = new DateTime(2023, 1, 1),
+                Price = 999.99m
+            };
+
+            var instruments = new List<Instrument> { instrument, instrument2 };
 
             //shoppingCart.Items.Add(instrument);
-            return View(shoppingCart);
+            return View(instruments);
         }
 
         [HttpGet]
@@ -48,7 +69,7 @@ namespace ReDoMusic.MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddCartItem(Guid id,string name, string brand, Color color, decimal price, string model)
+        public IActionResult AddCartItem(Guid id)
         {
             //var brand2 = new Brand
             //{
@@ -68,15 +89,23 @@ namespace ReDoMusic.MVC.Controllers
             //    Model = model
             //};
 
-            var instrument = _context.Instruments.Where(x => x.Id == id).FirstOrDefault();
+            var cart = _context.ShoppingCarts.Where(x => x.Id == Guid.Parse("123e4567-e89b-12d3-a456-426614174000")).FirstOrDefault();
 
-            if (instrument==null)
-                return BadRequest();
+            var instrument = _context.Instruments.Where(x => x.Id == Guid.Parse("123e4567-e89b-12d3-a456-426614174000")).FirstOrDefault();
 
-            ShoppingCart shoppingCart = new ShoppingCart();
-            shoppingCart.Items.Add(instrument);
+            //if (instrument==null)
+            //    return BadRequest();
 
-            _context.ShoppingCarts.Add(shoppingCart);
+            //ShoppingCart shoppingCart = new ShoppingCart();
+            //shoppingCart.Items = new List<Instrument>
+            //{
+            //    instrument
+            //};
+
+            //_context.SaveChanges();
+            //_context.ShoppingCarts.Add(shoppingCart);
+
+            cart.Items.Add(instrument);
             _context.SaveChanges();
 
             return View();

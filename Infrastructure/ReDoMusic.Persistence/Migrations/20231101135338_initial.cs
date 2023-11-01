@@ -29,6 +29,20 @@ namespace ReDoMusic.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ShoppingCarts",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    DeletedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShoppingCarts", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Instruments",
                 columns: table => new
                 {
@@ -39,6 +53,7 @@ namespace ReDoMusic.Persistence.Migrations
                     Color = table.Column<int>(type: "integer", nullable: false),
                     ProductionYear = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     Price = table.Column<decimal>(type: "numeric", nullable: false),
+                    ShoppingCartId = table.Column<Guid>(type: "uuid", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     DeletedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
@@ -52,12 +67,22 @@ namespace ReDoMusic.Persistence.Migrations
                         principalTable: "Brands",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Instruments_ShoppingCarts_ShoppingCartId",
+                        column: x => x.ShoppingCartId,
+                        principalTable: "ShoppingCarts",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Instruments_BrandId",
                 table: "Instruments",
                 column: "BrandId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Instruments_ShoppingCartId",
+                table: "Instruments",
+                column: "ShoppingCartId");
         }
 
         /// <inheritdoc />
@@ -68,6 +93,9 @@ namespace ReDoMusic.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Brands");
+
+            migrationBuilder.DropTable(
+                name: "ShoppingCarts");
         }
     }
 }
