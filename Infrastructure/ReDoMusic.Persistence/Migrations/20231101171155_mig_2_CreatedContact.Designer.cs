@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ReDoMusic.Persistence.Context;
@@ -11,9 +12,11 @@ using ReDoMusic.Persistence.Context;
 namespace ReDoMusic.Persistence.Migrations
 {
     [DbContext(typeof(ReDoMusicDbContext))]
-    partial class ReDoMusicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231101171155_mig_2_CreatedContact")]
+    partial class mig_2_CreatedContact
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -154,9 +157,6 @@ namespace ReDoMusic.Persistence.Migrations
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<bool>("IsResolved")
-                        .HasColumnType("boolean");
 
                     b.Property<string>("LastName")
                         .IsRequired()
