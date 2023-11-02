@@ -15,7 +15,6 @@
     <None Remove="Views\Comment\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="Views\Brand\" />
     <Folder Include="Views\Home\" />
     <Folder Include="Views\Comment\" />

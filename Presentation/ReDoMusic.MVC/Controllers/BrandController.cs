@@ -45,6 +45,22 @@ namespace ReDoMusic.MVC.Controllers
             _context.SaveChanges();
             return View();
         }
+        [HttpPost]
+        public IActionResult UpdateBrand(string id,string brandName, string brandDisplayText, string brandAddress)
+        {
+
+            var brand = _context.Brands.Where(x => x.Id == Guid.Parse(id)).FirstOrDefault();
+
+            brand.Name = brandName;
+            brand.Address = brandAddress;
+            brand.DisplayText = brandDisplayText;
+            brand.ModifiedOn = DateTime.UtcNow;
+       
+            //_context.Update(brand);
+            _context.SaveChanges();
+            return View();
+        }
+
 
         [HttpGet]
         public IActionResult DeleteBrand(string id)

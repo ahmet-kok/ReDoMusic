@@ -1,0 +1,81 @@
+﻿@using ReDoMusic.Domain.Entites;
+@model List<Instrument>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+
+    <!-- Add Bootstrap CSS link -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Add Bootstrap Icon CSS link -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+<body>
+
+    <div class="container mt-4">
+        <h1>Shopping Cart</h1>
+
+        <div class="row">
+            <div class="col-md-8">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Brand</th>
+                            <th>Price</th>
+                            @*  <th>Quantity</th> *@
+                            @* <th>Subtotal</th> *@
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Product rows will be dynamically generated here -->
+                        @foreach (var instrumentItem in Model)
+                        {
+                            <tr>
+                                <td>@instrumentItem.Name</td>
+                                <td>@instrumentItem.Brand.Name</td>
+                                <td>@instrumentItem.Price</td>
+                                <td>
+                                    @* <a asp-action="DeleteBrand" asp-route-id=".Id" class="btn btn-outline-danger">Delete</a> *@
+                                    <a asp-action="DeleteCartItem" asp-route-id=".Id">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                                        </svg>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Cart Summary</h5>
+                        <p>Total Items: <span id="total-items">0</span></p>
+                        <p>Total Price: $<span id="total-price">0.00</span></p>
+                        <button class="btn btn-primary" id="checkout">Checkout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Bootstrap JS and jQuery -->
+    @*     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> *@
+
+    <script>
+        // JavaScript code for adding and updating cart items goes here
+    </script>
+
+</body>
+</html>
