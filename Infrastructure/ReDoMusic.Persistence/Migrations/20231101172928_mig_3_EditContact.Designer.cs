@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ReDoMusic.Persistence.Context;
@@ -11,9 +12,11 @@ using ReDoMusic.Persistence.Context;
 namespace ReDoMusic.Persistence.Migrations
 {
     [DbContext(typeof(ReDoMusicDbContext))]
-    partial class ReDoMusicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231101172928_mig_3_EditContact")]
+    partial class mig_3_EditContact
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -125,26 +128,17 @@ namespace ReDoMusic.Persistence.Migrations
                     b.Property<DateTime?>("ProductionYear")
                         .HasColumnType("timestamp with time zone");
 
-
-                    b.Property<Guid?>("ShoppingCartId")
-                        .HasColumnType("uuid");
-
                     b.Property<bool>("Starred")
                         .HasColumnType("boolean");
-
 
                     b.HasKey("Id");
 
                     b.HasIndex("BrandId");
 
-                    b.HasIndex("ShoppingCartId");
-
                     b.ToTable("Instruments");
                 });
 
-
-            modelBuilder.Entity("ReDoMusic.Domain.Entites.ShoppingCart", b =>
-
+            modelBuilder.Entity("ReDoMusic.Domain.Entities.Contact", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -156,12 +150,6 @@ namespace ReDoMusic.Persistence.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ShoppingCarts");
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text");
@@ -198,7 +186,6 @@ namespace ReDoMusic.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Instrument");
-
                 });
 
             modelBuilder.Entity("ReDoMusic.Domain.Entites.Instrument", b =>
@@ -209,22 +196,12 @@ namespace ReDoMusic.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ReDoMusic.Domain.Entites.ShoppingCart", null)
-                        .WithMany("Items")
-                        .HasForeignKey("ShoppingCartId");
-
                     b.Navigation("Brand");
                 });
-
-
-            modelBuilder.Entity("ReDoMusic.Domain.Entites.ShoppingCart", b =>
-                {
-                    b.Navigation("Items");
 
             modelBuilder.Entity("ReDoMusic.Domain.Entites.Instrument", b =>
                 {
                     b.Navigation("Comments");
-
                 });
 #pragma warning restore 612, 618
         }
