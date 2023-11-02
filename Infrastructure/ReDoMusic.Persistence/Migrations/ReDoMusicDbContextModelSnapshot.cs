@@ -125,13 +125,11 @@ namespace ReDoMusic.Persistence.Migrations
                     b.Property<DateTime?>("ProductionYear")
                         .HasColumnType("timestamp with time zone");
 
-
                     b.Property<Guid?>("ShoppingCartId")
                         .HasColumnType("uuid");
 
                     b.Property<bool>("Starred")
                         .HasColumnType("boolean");
-
 
                     b.HasKey("Id");
 
@@ -142,9 +140,7 @@ namespace ReDoMusic.Persistence.Migrations
                     b.ToTable("Instruments");
                 });
 
-
             modelBuilder.Entity("ReDoMusic.Domain.Entites.ShoppingCart", b =>
-
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -162,6 +158,20 @@ namespace ReDoMusic.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ShoppingCarts");
+                });
+
+            modelBuilder.Entity("ReDoMusic.Domain.Entities.Contact", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text");
@@ -198,7 +208,6 @@ namespace ReDoMusic.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Instrument");
-
                 });
 
             modelBuilder.Entity("ReDoMusic.Domain.Entites.Instrument", b =>
@@ -216,15 +225,14 @@ namespace ReDoMusic.Persistence.Migrations
                     b.Navigation("Brand");
                 });
 
+            modelBuilder.Entity("ReDoMusic.Domain.Entites.Instrument", b =>
+                {
+                    b.Navigation("Comments");
+                });
 
             modelBuilder.Entity("ReDoMusic.Domain.Entites.ShoppingCart", b =>
                 {
                     b.Navigation("Items");
-
-            modelBuilder.Entity("ReDoMusic.Domain.Entites.Instrument", b =>
-                {
-                    b.Navigation("Comments");
-
                 });
 #pragma warning restore 612, 618
         }
