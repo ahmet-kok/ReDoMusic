@@ -40,12 +40,6 @@ namespace ReDoMusic.MVC.Controllers
             }
         }
 
-        public IActionResult Comment(string id)
-        {
-            var comments = _context.Comments.Include(x => x.Instrument).Where(x => x.Id == Guid.Parse(id)).ToList();
-            return View(comments);
-        }
-
         [HttpGet]
         public IActionResult AddComment(string id)
         {
@@ -72,7 +66,8 @@ namespace ReDoMusic.MVC.Controllers
             };
             _context.Add(comment);
             _context.SaveChanges();
-            return RedirectToAction("index");
+
+            return RedirectToAction("index", new { id = InstrumentId });
         }
 
         [HttpGet]
