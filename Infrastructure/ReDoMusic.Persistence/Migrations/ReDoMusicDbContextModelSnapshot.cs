@@ -105,6 +105,10 @@ namespace ReDoMusic.Persistence.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("ImageURL")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<bool>("IsInBasket")
                         .HasColumnType("boolean");
 

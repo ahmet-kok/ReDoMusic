@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ReDoMusic.Domain.Entites;
 using ReDoMusic.Persistence.Context;
 
@@ -18,9 +20,25 @@ namespace ReDoMusic.MVC.Controllers
             _context = new();
         }
         // GET: /<controller>/
-        public IActionResult Index()
+        public IActionResult Index(string id)
         {
-            var comments = _context.Comments.ToList();
+
+
+            if (id == null)
+            {
+                var comments = _context.Comments.Include(x => x.Instrument).ToList();
+                return View(comments);
+            }
+            else
+            {
+                var comments = _context.Comments.Include(x => x.Instrument).Where(x => x.Id == Guid.Parse(id)).ToList();
+                return View(comments);
+            }
+        }
+
+        public IActionResult Comment(string id)
+        {
+            var comments = _context.Comments.Include(x => x.Instrument).Where(x => x.Id == Guid.Parse(id)).ToList();
             return View(comments);
         }
 
