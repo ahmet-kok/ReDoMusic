@@ -6,6 +6,7 @@ using System.Xml.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ReDoMusic.Domain.Entites;
+using ReDoMusic.MVC.Models;
 using ReDoMusic.Persistence.Context;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -22,17 +23,20 @@ namespace ReDoMusic.MVC.Controllers
         // GET: /<controller>/
         public IActionResult Index(string id)
         {
-
+            CommentViewModel commentViewModel = new CommentViewModel();
 
             if (id == null)
             {
                 var comments = _context.Comments.Include(x => x.Instrument).ToList();
-                return View(comments);
+                commentViewModel.Comments = comments;
+                return View(commentViewModel);
             }
             else
             {
-                var comments = _context.Comments.Include(x => x.Instrument).Where(x => x.Id == Guid.Parse(id)).ToList();
-                return View(comments);
+                var comments = _context.Comments.Include(x => x.Instrument).Where(x => x.Instrument.Id == Guid.Parse(id)).ToList();
+                commentViewModel.Comments = comments;
+                commentViewModel.Instrument = _context.Instruments.Where(x => x.Id == Guid.Parse(id)).FirstOrDefault();
+                return View(commentViewModel);
             }
         }
 
@@ -43,16 +47,24 @@ namespace ReDoMusic.MVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddComment()
+        public IActionResult AddComment(string id)
         {
-            return View();
+            if (id == null)
+            {
+                return RedirectToAction("index");
+            }
+            var instrument = _context.Instruments.Where(x => x.Id == Guid.Parse(id)).FirstOrDefault();
+
+            return View(instrument);
         }
 
         [HttpPost]
         public IActionResult AddComment(string InstrumentId, string commentText)
         {
+            var instrument = _context.Instruments.Where(x => x.Id == Guid.Parse(InstrumentId)).FirstOrDefault();
             var comment = new Comment()
             {
+                Instrument = instrument,
                 Id = Guid.NewGuid(),
                 Owner = "User",
                 Text = commentText,
@@ -60,7 +72,7 @@ namespace ReDoMusic.MVC.Controllers
             };
             _context.Add(comment);
             _context.SaveChanges();
-            return View();
+            return RedirectToAction("index");
         }
 
         [HttpGet]

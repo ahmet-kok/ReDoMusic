@@ -1,13 +1,16 @@
-﻿<h2> Add Comment </h2>
+﻿@using ReDoMusic.Domain.Entites;
+@model Instrument
 
-<form method = "post">
-    <div class= "mb-3 mt-3">
-        <label class= "form-label"> Comment Text:</label>
-        <input type = "text" class= "form-control" placeholder = "Enter Comment" name = "commentText">
+<h2> Add Comment </h2>
+
+<form method="post">
+    <div class="mb-3 mt-3">
+        <label class="form-label"> Comment Text:</label>
+        <input type="text" class="form-control" placeholder="Enter Comment" name="commentText">
     </div>
-    <div class= "mb-3 mt-3">
-        <label class= "form-label"> Instrument Id:</label>
-        <input type = "text" class= "form-control" placeholder = "Enter Displaing Text" name = "InstrumentId">
+    <div class="mb-3 mt-3">
+        <label class="form-label"> Instrument Id:</label>
+        <input type="text" class="form-control" placeholder="Enter Displaing Text" value="@Model.Id" name="InstrumentId">
     </div>
-    <button type = "submit" class= "btn btn-primary"> Post Comment </button>
+    <button type="submit" class="btn btn-primary"> Post Comment </button>
 </form> 
