@@ -28,7 +28,6 @@
                             <p class="card-text">Price: $@instrument.Price</p>
                             <div class="btn-group" role="group">
                                 <a href="#" class="btn btn-primary">Add to Cart</a>
-                                <a asp-controller="Instrument" asp-action="DeleteInstrument" asp-route-id="@instrument.Id" class="btn btn-outline-danger">Delete</a>
                                 <a asp-controller="Comment" asp-action="Index" asp-route-id="@instrument.Id" class="btn btn-primary">Go to Comments</a>
                             </div>
                         </div>

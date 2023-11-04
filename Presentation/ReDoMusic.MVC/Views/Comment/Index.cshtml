@@ -1,36 +1,82 @@
 ﻿@using ReDoMusic.Domain.Entites;
-@model List<Comment>
+@model CommentViewModel
 
 <div class="container mt-3">
-    <h2>@Model.First().Instrument.Name Comments</h2>
-    <br />
+    @if (Model.Comments.Count > 0)
+    {
 
-    <a asp-action="AddComment" class="btn btn-primary">Add Comment</a>
-    <br />
-    <br />
-    
+        @if (Model.Instrument is not null)
+        {
+            <h2>
+                @Model.Instrument.Name
+                Comments
+            </h2>
+            <br />
+            <a asp-controller="Comment" asp-action="AddComment" asp-route-id="@Model.Instrument.Id" class="btn btn-primary">Add Comment</a>
 
-    <table class="table table-dark table-hover">
-        <thead>
-            <tr>
-                <th>Comment Owner</th>
-                <th>Comment Text</th>         
-                <th>Instrument Name</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var comment in Model)
-            {
+        }
+        else
+        {
+            <h2>
+
+                Comments
+            </h2>
+            <br />
+            <a asp-controller="Comment" asp-action="AddComment" class="btn btn-primary">Add Comment</a>
+
+        }
+        <br />
+        <br />
+
+
+        <table class="table table-dark table-hover">
+            <thead>
                 <tr>
-                    <td>@comment.Owner</td>
-                    <td>@comment.Text</td>
-                    <td>@comment.Instrument.Name</td>
-                    <td>
-                        <a asp-action="DeleteBrand" asp-route-id="@comment.Id" class="btn btn-outline-danger">Delete</a>
-                    </td>
+                    <th>Comment Owner</th>
+                    <th>Comment Text</th>
+                    <th>Instrument Name</th>
+                    <th>Actions</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var comment in Model.Comments)
+                {
+                    <tr>
+                        <td>@comment.Owner</td>
+                        <td>@comment.Text</td>
+                        <td>@comment.Instrument.Name</td>
+                        <td>
+                            <a asp-action="DeleteBrand" asp-route-id="@comment.Id" class="btn btn-outline-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+
+        @if (Model.Instrument is not null)
+        {
+            <h2>
+                @Model.Instrument.Name
+                Comments
+            </h2>
+            <br />
+            <a asp-controller="Comment" asp-action="AddComment" asp-route-id="@Model.Instrument.Id" class="btn btn-primary">Add Comment</a>
+
+        }
+        else
+        {
+            <h2>
+
+                Comments
+            </h2>
+            <br />
+            <a asp-controller="Comment" asp-action="AddComment" class="btn btn-primary">Add Comment</a>
+
+        }
+        <br />
+    }
+
 </div>
