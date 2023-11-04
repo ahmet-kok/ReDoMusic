@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ReDoMusic.Domain.Entites;
 using ReDoMusic.Domain.Enums;
 using ReDoMusic.Persistence.Context;
@@ -62,18 +63,12 @@ namespace ReDoMusic.MVC.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var instruments = _context.Instruments.Where(x => x.IsInBasket == true).ToList();
+            var instruments = _context.Instruments.Include(x => x.Brand).Where(x => x.IsInBasket == true).ToList();
             return View(instruments);
         }
 
         [HttpGet]
-        public IActionResult AddCartItem()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult AddCartItem(Guid id)
+        public IActionResult AddCartItem(string id)
         {
             //var brand2 = new Brand
             //{
@@ -93,9 +88,11 @@ namespace ReDoMusic.MVC.Controllers
             //    Model = model
             //};
 
-            var cart = _context.ShoppingCarts.Where(x => x.Id == Guid.Parse("123e4567-e89b-12d3-a456-426614174000")).FirstOrDefault();
 
-            var instrument = _context.Instruments.Where(x => x.Id == Guid.Parse("123e4567-e89b-12d3-a456-426614174000")).FirstOrDefault();
+
+            //var cart = _context.ShoppingCarts.Where(x => x.Id == Guid.Parse("123e4567-e89b-12d3-a456-426614174000")).FirstOrDefault();
+
+            var instrument = _context.Instruments.Where(x => x.Id == Guid.Parse(id)).FirstOrDefault();
 
             //if (instrument==null)
             //    return BadRequest();
@@ -109,10 +106,21 @@ namespace ReDoMusic.MVC.Controllers
             //_context.SaveChanges();
             //_context.ShoppingCarts.Add(shoppingCart);
 
-            cart.Items.Add(instrument);
+            instrument.IsInBasket = true;
             _context.SaveChanges();
 
-            return View();
+            return RedirectToAction("index","home");
+        }
+
+        [HttpGet]
+        public IActionResult DeleteCartItem(string id)
+        {
+            var instrument = _context.Instruments.Where(x => x.Id == Guid.Parse(id)).FirstOrDefault();
+
+            instrument.IsInBasket = false;
+            _context.SaveChanges();
+
+            return RedirectToAction("index");
         }
     }
 }

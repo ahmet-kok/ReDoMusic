@@ -20,11 +20,12 @@ namespace ReDoMusic.MVC.Controllers
             _context = new();
         }
 
+
         // GET: /<controller>/
         public IActionResult Index()
         {
             Configurations.GetString("ConnectionStrings:PostgreSQL");
-            var instruments = _context.Instruments.Include(x => x.Brand).ToList();
+            var instruments = _context.Instruments.Include(x => x.Brand).OrderBy(x => x.Name).ToList();
             return View(instruments);
         }
     }

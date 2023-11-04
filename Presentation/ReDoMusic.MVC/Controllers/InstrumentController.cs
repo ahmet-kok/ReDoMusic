@@ -32,9 +32,9 @@ namespace ReDoMusic.MVC.Controllers
             return View(brands);
         }
 
-        
+
         [HttpPost]
-        public IActionResult AddInstrument(string instrumentName, string brandName,string instrumentModel, Color instrumentColor, decimal price)
+        public IActionResult AddInstrument(string instrumentName, string brandName, string instrumentModel, Color instrumentColor, decimal price)
         {
             var brand = _context.Brands.Where(brand => brand.Name == brandName).FirstOrDefault();
             var instrument = new Instrument()
@@ -56,7 +56,7 @@ namespace ReDoMusic.MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateInstrument(string id,string name, string model, Color color, decimal price)
+        public IActionResult UpdateInstrument(string id, string name, string model, Color color, decimal price)
         {
 
             var instrument = _context.Instruments.Where(x => x.Id == Guid.Parse(id)).FirstOrDefault();
@@ -83,6 +83,32 @@ namespace ReDoMusic.MVC.Controllers
                 _context.SaveChanges();
             }
             return RedirectToAction("index");
+        }
+
+        [HttpGet]
+        public IActionResult AddToStarList(string id)
+        {
+            var instrument = _context.Instruments.FirstOrDefault(x => x.Id == Guid.Parse(id));
+
+
+            instrument.Starred = true;
+
+            _context.SaveChanges();
+
+            return RedirectToAction("index", "home");
+        }
+
+        [HttpGet]
+        public IActionResult RemoveFromStarList(string id)
+        {
+            var instrument = _context.Instruments.FirstOrDefault(x => x.Id == Guid.Parse(id));
+
+
+            instrument.Starred = false;
+
+            _context.SaveChanges();
+
+            return RedirectToAction("index", "home");
         }
     }
 }
