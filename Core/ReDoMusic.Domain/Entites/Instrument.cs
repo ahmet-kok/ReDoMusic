@@ -12,6 +12,7 @@ namespace ReDoMusic.Domain.Entites
         public Color Color { get; set; }
         public DateTime? ProductionYear { get; set; }
         public decimal Price { get; set; }
+        public string ImageURL { get; set; }
         public bool IsInBasket { get; set; }
         public bool Starred { get; set; }
         public List<Comment>? Comments { get; set; }

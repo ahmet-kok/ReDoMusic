@@ -33,7 +33,7 @@ namespace ReDoMusic.MVC.Controllers
 
         
         [HttpPost]
-        public IActionResult AddInstrument(string instrumentName, string brandName,string instrumentModel, Color instrumentColor, decimal price)
+        public IActionResult AddInstrument(string instrumentName,string imageURL, string brandName,string instrumentModel, Color instrumentColor, decimal price)
         {
             var brand = _context.Brands.Where(brand => brand.Name == brandName).FirstOrDefault();
             var instrument = new Instrument()
@@ -43,6 +43,7 @@ namespace ReDoMusic.MVC.Controllers
                 Model = instrumentModel,
                 Color = instrumentColor,
                 Price = price,
+                ImageURL = imageURL,
                 IsInBasket = false,
                 Starred = false,
                 Comments = null,
