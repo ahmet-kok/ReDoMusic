@@ -34,4 +34,7 @@
   <ItemGroup>
     <Content Remove="Views\Brand\AddComment.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\images\music-note-beamed.svg" />
+  </ItemGroup>
 </Project>
