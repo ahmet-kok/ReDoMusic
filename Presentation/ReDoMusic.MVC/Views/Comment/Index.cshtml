@@ -2,21 +2,14 @@
 @model List<Comment>
 
 <div class="container mt-3">
-    <h2>@Model.First().Instrument.Name Comments</h2>
-    <br />
-
-    <a asp-action="AddComment" class="btn btn-primary">Add Comment</a>
-    <br />
-    <br />
-    
-
+    <h2>Comments</h2>
     <table class="table table-dark table-hover">
         <thead>
             <tr>
                 <th>Comment Owner</th>
-                <th>Comment Text</th>         
+                <th>Comment Text</th>
+                <th>Instrument Id</th>
                 <th>Instrument Name</th>
-                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -25,10 +18,9 @@
                 <tr>
                     <td>@comment.Owner</td>
                     <td>@comment.Text</td>
+                    <td>@comment.Instrument</td>
                     <td>@comment.Instrument.Name</td>
-                    <td>
-                        <a asp-action="DeleteBrand" asp-route-id="@comment.Id" class="btn btn-outline-danger">Delete</a>
-                    </td>
+                    <td><a asp-action="DeleteBrand" asp-route-id="@comment.Id" class="btn btn-outline-danger">Delete</a></td>
                 </tr>
             }
         </tbody>
