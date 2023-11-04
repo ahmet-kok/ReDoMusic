@@ -14,10 +14,8 @@ namespace ReDoMusic.MVC.Controllers
             _context = new();
         }
 
-        [HttpGet]
-        public IActionResult Index()
-        {
-            //var shoppingCart = _context.ShoppingCarts.OrderBy(x => x.Id).Last();
+        /*
+         //var shoppingCart = _context.ShoppingCarts.OrderBy(x => x.Id).Last();
             //var shoppingCart = _context.ShoppingCarts.Where(x=> x.)
             var cart = _context.ShoppingCarts.Where(x => x.Id == Guid.Parse("123e4567-e89b-12d3-a456-426614174000")).FirstOrDefault();
 
@@ -59,6 +57,12 @@ namespace ReDoMusic.MVC.Controllers
             var instruments = new List<Instrument> { instrument, instrument2 };
 
             //shoppingCart.Items.Add(instrument);
+         */
+
+        [HttpGet]
+        public IActionResult Index()
+        {
+            var instruments = _context.Instruments.Where(x => x.IsInBasket == true).ToList();
             return View(instruments);
         }
 

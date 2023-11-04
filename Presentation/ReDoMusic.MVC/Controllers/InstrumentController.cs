@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ReDoMusic.Domain.Entites;
+using ReDoMusic.Domain.Enums;
 using ReDoMusic.Persistence.Context;
 
 namespace ReDoMusic.MVC.Controllers
@@ -24,21 +26,15 @@ namespace ReDoMusic.MVC.Controllers
         [HttpGet]
         public IActionResult AddInstrument()
         {
-            return View();
+            var brands = _context.Brands.ToList();
+            return View(brands);
         }
 
+        
         [HttpPost]
-        public IActionResult AddInstrument(string instrumentName, string brandName, string brandDisplayText, string brandAddress, string instrumentModel, Color instrumentColor, decimal price)
+        public IActionResult AddInstrument(string instrumentName, string brandName,string instrumentModel, Color instrumentColor, decimal price)
         {
-            var brand = new Brand()
-            {
-                Id = Guid.NewGuid(),
-                Name = brandName,
-                Address = brandAddress,
-                DisplayText = brandDisplayText,
-                CreatedOn = DateTime.UtcNow,
-            };
-
+            var brand = _context.Brands.Where(brand => brand.Name == brandName).FirstOrDefault();
             var instrument = new Instrument()
             {
                 Name = instrumentName,
@@ -46,7 +42,7 @@ namespace ReDoMusic.MVC.Controllers
                 Model = instrumentModel,
                 Color = instrumentColor,
                 Price = price,
-                IsInBasket = true,
+                IsInBasket = false,
                 Starred = false,
                 Comments = null,
             };
@@ -54,23 +50,18 @@ namespace ReDoMusic.MVC.Controllers
             _context.Add(instrument);
             _context.SaveChanges();
 
-            return View();
+            return RedirectToAction("index");
         }
 
 
         [HttpGet]
         public IActionResult DeleteInstrument(string id)
         {
-            var instrument = _context.Instruments.Include(x => x.Brand).FirstOrDefault(x => x.Id == Guid.Parse(id));
+            var instrument = _context.Instruments.FirstOrDefault(x => x.Id == Guid.Parse(id));
 
             if (instrument != null)
             {
                 _context.Instruments.Remove(instrument);
-
-                if (instrument.Brand != null)
-                {
-                    _context.Brands.Remove(instrument.Brand);
-                }
 
                 _context.SaveChanges();
             }
